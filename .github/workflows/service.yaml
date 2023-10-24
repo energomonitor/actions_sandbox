@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: services/$${{ inputs.service-name }}
+        working-directory: services/${{ inputs.service-name }}
 
     steps:
       - uses: actions/checkout@v3
