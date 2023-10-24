@@ -9,7 +9,9 @@ jobs:
   call-service-worflow:
     steps:
       - uses: actions/checkout@v3
+        with:
+          path: .github
 
-      - uses: ./service.yaml
+      - uses: ./.github/workflows/service.yaml
         with:
           service-name: a
