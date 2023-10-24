@@ -11,4 +11,4 @@ jobs:
   call-service-worflow:
     uses: ./.github/workflows/service.yaml
     with:
-      service-name: b
+      service_name: b
