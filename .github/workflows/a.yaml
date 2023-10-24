@@ -1,0 +1,12 @@
+name: Service A
+
+on:
+  push:
+    paths:
+      - services/a
+
+jobs:
+  call-service-worflow:
+    uses: ./service.yaml
+    with:
+      service-name: a
