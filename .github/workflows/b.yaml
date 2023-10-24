@@ -7,6 +7,6 @@ on:
 
 jobs:
   call-service-worflow:
-    uses: ./service.yaml
+    uses: ./service.yaml@master
     with:
       service-name: b
