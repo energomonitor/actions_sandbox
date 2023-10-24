@@ -34,6 +34,8 @@ jobs:
       run:
         working-directory: services/${{ inputs.service_name }}/
 
+    run-name: Deploy service ${{ inputs.service_name}} (${{ inputs.checkout_ref }}) to ${{ inputs.environment }} environment
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
