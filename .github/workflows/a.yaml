@@ -3,6 +3,7 @@ name: Service A
 on:
   push:
     paths:
+      - .github/workflows/a.yaml
       - services/a
 
 jobs:

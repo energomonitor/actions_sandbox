@@ -3,10 +3,17 @@ name: Service B
 on:
   push:
     paths:
+      - .github/workflows/b.yaml
       - services/b
 
 jobs:
+
   call-service-worflow:
-    uses: ./.github/workflows/service.yaml@master
-    with:
-      service-name: b
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          path: .github
+
+      - uses: ./.github/workflows/service.yaml
+        with:
+          service-name: a
