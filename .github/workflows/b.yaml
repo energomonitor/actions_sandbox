@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - .github/workflows/b.yaml
+      - .github/workflows/service.yaml
       - services/b
 
 jobs:
