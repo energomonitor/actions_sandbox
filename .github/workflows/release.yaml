@@ -1,0 +1,33 @@
+name: Deploy to Environment
+
+on:
+  workflow_dispatch:
+    inputs:
+      checkout_ref:
+        description: 'Git reference to checkout (e.g., main, feature/xyz)'
+        required: true
+      environment:
+        description: 'Target deployment environment (dev, stage, prod)'
+        required: true
+        type: choice
+        options:
+          - dev
+          - stage
+          - prod
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ github.event.inputs.environment }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.inputs.checkout_ref }}
+
+      - name: Deploy to environment
+        run: |
+          # Implement deployment steps based on the selected environment
+          echo "Deploying to ${{ github.event.inputs.environment }}"
