@@ -17,4 +17,4 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Run service ${{ inputs.service-name }} test script
-        run: sh service/${{ inputs.service-name }}/test.sh
+        run: ./test.sh

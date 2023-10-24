@@ -7,15 +7,7 @@ on:
       - services/b
 
 jobs:
-
   call-service-worflow:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          path: .github
-
-      - uses: ./.github/workflows/service.yaml
-        with:
-          service-name: a
+    uses: ./.github/workflows/service.yaml
+    with:
+      service-name: b
