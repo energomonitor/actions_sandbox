@@ -6,11 +6,10 @@ on:
       - services/a
 
 jobs:
-  checkout:
+  call-service-worflow:
     steps:
       - uses: actions/checkout@v3
 
-  call-service-worflow:
-    uses: ./service.yaml
-    with:
-      service-name: a
+      - uses: ./service.yaml
+        with:
+          service-name: a

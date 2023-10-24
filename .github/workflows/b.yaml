@@ -7,6 +7,6 @@ on:
 
 jobs:
   call-service-worflow:
-    uses: ./service.yaml@master
+    uses: .github/workflows/service.yaml@master
     with:
       service-name: b
