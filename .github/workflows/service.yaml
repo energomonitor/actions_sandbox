@@ -3,7 +3,7 @@ name: Reusable workflow example
 on:
   workflow_call:
     inputs:
-      service-name:
+      service_name:
         required: true
         type: string
 
@@ -12,10 +12,10 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: services/${{ inputs.service-name }}/
+        working-directory: services/${{ inputs.service_name }}/
 
     steps:
       - uses: actions/checkout@v3
 
-      - name: Run service ${{ inputs.service-name }} test script
+      - name: Run service ${{ inputs.service_name }} test script
         run: ./test.sh

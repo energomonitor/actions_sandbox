@@ -32,7 +32,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: services/${{ inputs.service-name }}/
+        working-directory: services/${{ inputs.service_name }}/
 
     steps:
       - name: Checkout code
