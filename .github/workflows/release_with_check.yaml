@@ -1,11 +1,22 @@
 name: Deploy to Environment With Check
 
+run-name: Deploy service ${{ inputs.service_name}} (${{ inputs.checkout_ref }}) to ${{ inputs.environment }} environment
+
 on:
   workflow_dispatch:
     inputs:
       checkout_ref:
         description: 'Git reference to checkout (e.g., main, feature/xyz)'
         required: true
+
+      service_name:
+        description: 'Service name'
+        required: true
+        type: choice
+        options:
+          - a
+          - b
+
       environment:
         description: 'Target deployment environment (dev, stage, prod)'
         required: true
@@ -20,6 +31,9 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: ${{ github.event.inputs.environment }}
+    defaults:
+      run:
+        working-directory: services/${{ inputs.service_name }}/
 
     steps:
       - name: Check for successful tests
@@ -41,3 +55,4 @@ jobs:
         run: |
           # Implement deployment steps based on the selected environment
           echo "Deploying to ${{ github.event.inputs.environment }}"
+          ./deploy.sh
