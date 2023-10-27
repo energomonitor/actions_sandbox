@@ -19,3 +19,17 @@ jobs:
 
       - name: Run service ${{ inputs.service_name }} test script
         run: ./test.sh
+
+      - name: Get next version
+        uses: reecetech/version-increment@2023.9.3
+        id: version
+        with:
+          scheme: calver
+
+      - name: Build docker image
+        run: make build
+
+      - name: Release docker image
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: make release
