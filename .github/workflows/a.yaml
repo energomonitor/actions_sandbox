@@ -1,14 +1,24 @@
 name: Service A
 
 on:
-  push:
+  pull_request:
+    branch:
+      - master
+      - main
     paths:
       - .github/workflows/a.yaml
-      - .github/workflows/service.yaml
+      - .github/workflows/_*.yaml
       - services/a
 
 jobs:
-  call-service-worflow:
-    uses: ./.github/workflows/service.yaml
+  pull-request-job:
+    uses: ./.github/workflows/_service_test.yaml
+    with:
+      service_name: a
+
+  push-job:
+    if: github.event.action == 'merged'
+
+    uses: ./.github/workflows/_service_release.yaml
     with:
       service_name: a

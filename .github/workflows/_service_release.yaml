@@ -1,4 +1,4 @@
-name: Reusable workflow example
+name: Release service
 
 on:
   workflow_call:
@@ -16,9 +16,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-
-      - name: Run service ${{ inputs.service_name }} test script
-        run: ./test.sh
 
       - name: Generate release tag
         id: generate_release_tag
