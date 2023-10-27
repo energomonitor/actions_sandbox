@@ -11,16 +11,14 @@ on:
       - services/a
 
 jobs:
+  pull-request-job:
+    uses: ./.github/workflows/_service_test.yaml
+    with:
+      service_name: a
+
   push-job:
     if: github.event.action == 'merged'
-    call-service-worflow:
-      uses: ./.github/workflows/_service_release.yaml
-      with:
-        service_name: a
 
-  pull-request-job:
-    if: github.event.action == 'opened'
-    call-service-worflow:
-      uses: ./.github/workflows/_service_test.yaml
-      with:
-        service_name: a
+    uses: ./.github/workflows/_service_release.yaml
+    with:
+      service_name: a
