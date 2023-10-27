@@ -1,21 +1,13 @@
 name: Service A
 
 on:
-  push:
-    branch:
-      - master
-      - main
-    paths:
-      - .github/workflows/a.yaml
-      - .github/workflows/service.yaml
-      - services/a
   pull_request:
     branch:
       - master
       - main
     paths:
       - .github/workflows/a.yaml
-      - .github/workflows/service.yaml
+      - .github/workflows/_*.yaml
       - services/a
 
 push-job:

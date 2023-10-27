@@ -19,4 +19,3 @@ jobs:
 
       - name: Run service ${{ inputs.service_name }} test script
         run: ./test.sh
-
