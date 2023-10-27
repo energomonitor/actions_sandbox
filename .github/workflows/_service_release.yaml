@@ -8,7 +8,7 @@ on:
         type: string
 
 jobs:
-  test_and_deploy:
+  release:
     runs-on: ubuntu-latest
     defaults:
       run:
