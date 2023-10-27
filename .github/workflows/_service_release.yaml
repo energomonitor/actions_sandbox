@@ -30,9 +30,8 @@ jobs:
         run: make build
 
       - name: Release docker image
-        env:
-          VERSION: ${{ steps.generate_release_tag.outputs.next_release_tag }}
-        run: make release
+        run: make release VERSION=${{ steps.generate_release_tag.outputs.next_release_tag }}
+
 
       - name: Create Release
         uses: actions/create-release@v1
