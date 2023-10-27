@@ -17,7 +17,7 @@ jobs:
       service_name: a
 
   push-job:
-    if: github.event.action == 'merged'
+    if: github.event.pull_request.merged == true
 
     uses: ./.github/workflows/_service_release.yaml
     with:
