@@ -1,0 +1,22 @@
+name: Service test
+
+on:
+  workflow_call:
+    inputs:
+      service_name:
+        required: true
+        type: string
+
+jobs:
+  test_and_deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: services/${{ inputs.service_name }}/
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run service ${{ inputs.service_name }} test script
+        run: ./test.sh
+
