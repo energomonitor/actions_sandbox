@@ -4,18 +4,16 @@ ifndef SERVICE_NAME
     $(error SERVICE_NAME is not set)
 endif
 
+VERSION ?= latest
+
 # Make sure there are no spaces.
 SERVICE_NAME := $(SERVICE_NAME: =_)
 
 test:
-    ./test.sh
+	./test.sh
 
 build:
-    docker build -t $(SERVICE_NAME) .
+	docker build -t $(SERVICE_NAME) .
 
 release:
-ifndef VERSION
-    $(error VERSION is not set)
-else
-    docker tag $(SERVICE_NAME) $(SERVICE_NAME):$(VERSION)
-endif
+	docker tag $(SERVICE_NAME) $(SERVICE_NAME):$(VERSION)
