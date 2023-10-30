@@ -16,13 +16,14 @@ on:
       - services/a
 
 jobs:
-  pull-request-job:
+  test-job:
     uses: ./.github/workflows/_service_test.yaml
     with:
       service_name: a
 
-  push-job:
+  release-job:
     if: github.event.pull_request.merged == true
     uses: ./.github/workflows/_service_release.yaml
     with:
       service_name: a
+      automatic_deploy_to_dev: true

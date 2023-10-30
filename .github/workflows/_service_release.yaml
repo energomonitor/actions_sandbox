@@ -6,6 +6,8 @@ on:
       service_name:
         required: true
         type: string
+      automatic_deploy_to_dev:
+        type: boolean
 
 jobs:
   release:
@@ -38,3 +40,11 @@ jobs:
         with:
           tag_name: ${{ steps.tag_image.outputs.next_tag }}
           generate_release_notes: true
+
+      - name: Automatic deploy to Dev
+        if: ${{ inputs.automatic_deploy_to_dev == 'true' }}
+        uses: ./.github/workflows/release.yaml
+        with:
+          checkout_ref: ${{ steps.tag_image.outputs.next_tag }}
+          service_name: ${{ inputs.service_name }}
+          environment: dev

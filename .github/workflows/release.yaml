@@ -25,6 +25,16 @@ on:
           - dev
           - stage
           - prod
+  workflow_call:
+    inputs:
+      checkout_ref:
+        required: true
+      service_name:
+        required: true
+        type: string
+      environment:
+        required: true
+        type: string
 
 jobs:
   deploy:
