@@ -12,7 +12,7 @@ new_version_file := /tmp/newtag.txt
 new_tag:
 	@echo "Pulling current tags."
 	@git pull --ff-only --tags
-	@LATEST=`git describe --tags --always --abbrev=0 --match "$(SERVICE_NAME)/v*" | sed 's/$(SERVICE_NAME)\///'`; \
+	@LATEST=`git describe --tags --always --abbrev=0 --match "a/v*" $$(git rev-list --tags --max-count=1) | sed 's/$(SERVICE_NAME)\///'`; \
 	echo "Latest tag: $$LATEST"; \
 	NEWPRE="v$$(date +'%Y').$$(date +'%m')"; \
 	echo "New prefix: $$NEWPRE"; \
