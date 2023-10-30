@@ -1,4 +1,4 @@
-name: Deploy to Environment
+name: Deploy to Environment With Check
 
 run-name: Deploy service ${{ inputs.service_name}} (${{ inputs.checkout_ref }}) to ${{ inputs.environment }} environment
 
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       checkout_ref:
-        description: 'Git reference to checkout (e.g., main, feature/xyz)'
+        description: 'Git tag'
         required: true
 
       service_name:
@@ -31,17 +31,25 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: ${{ github.event.inputs.environment }}
-
     defaults:
       run:
         working-directory: services/${{ inputs.service_name }}/
-
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
           ref: ${{ github.event.inputs.checkout_ref }}
+
+      - name: Check for successful tests
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # Check if the checkout_ref has a successful test status
+          if ! gh api repos/${{ github.repository }}/commits/${{ github.event.inputs.checkout_ref }}/check-runs | jq '.check_runs[] | select(.conclusion == "success")' > /dev/null; then
+            echo "No successful tests found for ${{ github.event.inputs.checkout_ref }}"
+            exit 1
+          fi
 
       - name: Deploy to environment
         run: |
