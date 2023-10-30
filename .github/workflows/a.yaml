@@ -2,6 +2,11 @@ name: Service A
 
 on:
   pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - closed
     branch:
       - master
       - main
@@ -18,7 +23,6 @@ jobs:
 
   push-job:
     if: github.event.pull_request.merged == true
-
     uses: ./.github/workflows/_service_release.yaml
     with:
       service_name: a
