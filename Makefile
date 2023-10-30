@@ -12,11 +12,13 @@ new_version_file := /tmp/newtag.txt
 new_tag:
 	@echo "Pulling current tags."
 	@git pull --ff-only --tags
-	@LATEST=`git describe --tags --always --abbrev=0 --match "$(SERVICE_NAME)/v*"`; \
+	@LATEST=`git describe --tags --always --abbrev=0 --match "$(SERVICE_NAME)/v*" | sed 's/$(SERVICE_NAME)\///'`; \
 	echo "Latest tag: $$LATEST"; \
 	NEWPRE="v$$(date +'%Y').$$(date +'%m')"; \
-	if [ "$$LATEST" = $$NEWPRE* ]; then \
-		new_version="$$LATEST$${LATEST%.*}.$$(( $${LATEST##*.} + 1 ))"; \
+	echo "New prefix: $$NEWPRE"; \
+	if case $$LATEST in $$NEWPRE*) ;; *) false;; esac ; then \
+		echo "Incrementing patch version."; \
+		new_version="$${LATEST%.*}.$$(( $${LATEST##*.} + 1 ))"; \
 	else \
 		new_version="$$NEWPRE.0"; \
 	fi; \
