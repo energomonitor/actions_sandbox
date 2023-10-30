@@ -15,28 +15,28 @@ jobs:
         working-directory: services/${{ inputs.service_name }}/
 
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Generate release tag
-        id: generate_release_tag
-        uses: amitsingh-007/next-release-tag@v4.0.0
+      - uses: actions/checkout@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          tag_prefix: '${{ inputs.service_name }}/'
-          tag_template: 'yyyy.mm.i'
-
+          fetch-depth: 0
+          fetch-tags: true
+          ref: ${{ github.event.pull_request.head.ref }}
 
       - name: Build docker image
         run: make build
 
-      - name: Release docker image
-        run: make release VERSION=${{ steps.generate_release_tag.outputs.next_release_tag }}
+      - name: Tag the docker image
+        id: tag_image
+        run: make release
 
+      - uses: thejeff77/action-push-tag@v1.0.0
+        with:
+          tag: ${{ steps.tag_image.outputs.next_tag }}
+          message: '"${{ steps.tag_image.outputs.next_tag }}: PR #${{ github.event.pull_request.number }} - ${{ github.event.pull_request.title }}"'
 
       - name: Create Release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.generate_release_tag.outputs.next_release_tag }}
-          release_name: Release ${{ steps.generate_release_tag.outputs.next_release_tag }}
+          tag_name: ${{ steps.tag_image.outputs.next_tag }}
+          release_name: Release ${{ steps.tag_image.outputs.next_tag }}

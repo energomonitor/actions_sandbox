@@ -2,6 +2,7 @@ name: Service A
 
 on:
   pull_request:
+    #    types: [closed]
     branch:
       - master
       - main
