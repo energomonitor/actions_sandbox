@@ -1,6 +1,15 @@
 name: Release service
 
 on:
+  workflow_dispatch:
+    service_name:
+      description: 'Service name'
+      required: true
+      type: choice
+      options:
+        - a
+        - b
+
   workflow_call:
     inputs:
       service_name:
@@ -19,9 +28,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
           fetch-tags: true
-          ref: ${{ github.event.pull_request.head.ref }}
 
       - name: Build docker image
         run: make build
@@ -40,6 +47,8 @@ jobs:
         with:
           tag_name: ${{ steps.tag_image.outputs.next_tag }}
           generate_release_notes: true
+          prerelease: ${{ github.event_name == 'workflow_dispatch' }}
+
 
       - name: Automatic deploy to Dev
         if: ${{ inputs.automatic_deploy_to_dev == 'true' }}
