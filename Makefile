@@ -27,7 +27,6 @@ new_tag:
 	else \
 		new_version="$$NEWPRE.0"; \
 	fi; \
-	# Add -pre-release postfix if PRERELEASE is true
 	if [ "$(PRERELEASE)" = "true" ]; then \
 		new_version="$$new_version-pre-release"; \
 	fi; \

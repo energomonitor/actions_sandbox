@@ -29,6 +29,8 @@ jobs:
     defaults:
       run:
         working-directory: services/${{ inputs.service_name }}/
+    outputs:
+      next_tag: ${{ steps.tag_image.outputs.next_tag }}
 
     steps:
       - uses: actions/checkout@v4
@@ -56,10 +58,11 @@ jobs:
           prerelease: ${{ github.event_name == 'workflow_dispatch' }}
 
 
-      - name: Automatic deploy to Dev
-        if: ${{ inputs.automatic_deploy_to_dev == true }}
-        uses: ./.github/workflows/deploy.yaml
-        with:
-          checkout_ref: ${{ steps.tag_image.outputs.next_tag }}
-          service_name: ${{ inputs.service_name }}
-          environment: dev
+  automatic_deploy:
+    if: ${{ inputs.automatic_deploy_to_dev == true }}
+    needs: release
+    uses: ./.github/workflows/deploy.yaml
+    with:
+      checkout_ref: ${{ needs.release.outputs.next_tag }}
+      service_name: ${{ inputs.service_name }}
+      environment: dev
