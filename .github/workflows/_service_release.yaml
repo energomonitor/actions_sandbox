@@ -57,7 +57,7 @@ jobs:
 
 
       - name: Automatic deploy to Dev
-        if: ${{ inputs.automatic_deploy_to_dev == 'true' }}
+        if: ${{ inputs.automatic_deploy_to_dev == true }}
         uses: ./.github/workflows/release.yaml
         with:
           checkout_ref: ${{ steps.tag_image.outputs.next_tag }}
