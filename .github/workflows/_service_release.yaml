@@ -2,13 +2,18 @@ name: Release service
 
 on:
   workflow_dispatch:
-    service_name:
-      description: 'Service name'
-      required: true
-      type: choice
-      options:
-        - a
-        - b
+    inputs:
+      service_name:
+        description: 'Service name'
+        required: true
+        type: choice
+        options:
+          - a
+          - b
+      automatic_deploy_to_dev:
+        description: "Automatically deploy this release to DEV environment"
+        type: boolean
+
 
   workflow_call:
     inputs:
@@ -24,10 +29,13 @@ jobs:
     defaults:
       run:
         working-directory: services/${{ inputs.service_name }}/
+    outputs:
+      next_tag: ${{ steps.tag_image.outputs.next_tag }}
 
     steps:
       - uses: actions/checkout@v4
         with:
+          fetch-depth: 0
           fetch-tags: true
 
       - name: Build docker image
@@ -35,7 +43,7 @@ jobs:
 
       - name: Tag the docker image
         id: tag_image
-        run: make release
+        run: PRERELEASE=${{ github.event_name == 'workflow_dispatch' }} make release
 
       - uses: thejeff77/action-push-tag@v1.0.0
         with:
@@ -50,10 +58,11 @@ jobs:
           prerelease: ${{ github.event_name == 'workflow_dispatch' }}
 
 
-      - name: Automatic deploy to Dev
-        if: ${{ inputs.automatic_deploy_to_dev == 'true' }}
-        uses: ./.github/workflows/release.yaml
-        with:
-          checkout_ref: ${{ steps.tag_image.outputs.next_tag }}
-          service_name: ${{ inputs.service_name }}
-          environment: dev
+  automatic_deploy:
+    if: ${{ inputs.automatic_deploy_to_dev == true }}
+    needs: release
+    uses: ./.github/workflows/deploy.yaml
+    with:
+      checkout_ref: ${{ needs.release.outputs.next_tag }}
+      service_name: ${{ inputs.service_name }}
+      environment: dev
