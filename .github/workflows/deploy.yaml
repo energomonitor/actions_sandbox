@@ -20,11 +20,8 @@ on:
       environment:
         description: 'Target deployment environment (dev, stage, prod)'
         required: true
-        type: choice
-        options:
-          - dev
-          - stage
-          - prod
+        type: environment
+
   workflow_call:
     inputs:
       checkout_ref:
