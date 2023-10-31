@@ -2,16 +2,17 @@ name: Release service
 
 on:
   workflow_dispatch:
-    service_name:
-      description: 'Service name'
-      required: true
-      type: choice
-      options:
-        - a
-        - b
-    automatic_deploy_to_dev:
-      description: "Automatically deploy this release to DEV environment"
-      type: boolean
+    inputs:
+      service_name:
+        description: 'Service name'
+        required: true
+        type: choice
+        options:
+          - a
+          - b
+      automatic_deploy_to_dev:
+        description: "Automatically deploy this release to DEV environment"
+        type: boolean
 
 
   workflow_call:
