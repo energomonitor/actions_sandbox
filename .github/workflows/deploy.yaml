@@ -26,6 +26,7 @@ on:
     inputs:
       checkout_ref:
         required: true
+        type: string
       service_name:
         required: true
         type: string
