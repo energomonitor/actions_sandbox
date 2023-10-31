@@ -9,6 +9,10 @@ on:
       options:
         - a
         - b
+    automatic_deploy_to_dev:
+      description: "Automatically deploy this release to DEV environment"
+      type: boolean
+
 
   workflow_call:
     inputs:
