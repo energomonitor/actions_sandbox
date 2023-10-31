@@ -41,7 +41,7 @@ jobs:
 
       - name: Tag the docker image
         id: tag_image
-        run: make release
+        run: PRERELEASE=${{ github.event_name == 'workflow_dispatch' }} make release
 
       - uses: thejeff77/action-push-tag@v1.0.0
         with:
@@ -58,7 +58,7 @@ jobs:
 
       - name: Automatic deploy to Dev
         if: ${{ inputs.automatic_deploy_to_dev == true }}
-        uses: ./.github/workflows/release.yaml
+        uses: ./.github/workflows/deploy.yaml
         with:
           checkout_ref: ${{ steps.tag_image.outputs.next_tag }}
           service_name: ${{ inputs.service_name }}

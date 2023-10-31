@@ -7,6 +7,8 @@ endif
 # Make sure there are no spaces.
 SERVICE_NAME := $(SERVICE_NAME: =_)
 
+PRERELEASE ?= false
+
 new_version_file := /tmp/newtag.txt
 
 new_tag:
@@ -24,6 +26,10 @@ new_tag:
 		new_version="$${LATEST%.*}.$$(( $${LATEST##*.} + 1 ))"; \
 	else \
 		new_version="$$NEWPRE.0"; \
+	fi; \
+	# Add -pre-release postfix if PRERELEASE is true
+	if [ "$(PRERELEASE)" = "true" ]; then \
+		new_version="$$new_version-pre-release"; \
 	fi; \
 	echo "$$new_version" > $(new_version_file); \
 	NEWTAG=$(SERVICE_NAME)/$$new_version; \
