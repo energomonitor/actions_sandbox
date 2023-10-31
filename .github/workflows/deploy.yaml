@@ -5,10 +5,6 @@ run-name: Deploy service ${{ inputs.service_name}} (${{ inputs.checkout_ref }}) 
 on:
   workflow_dispatch:
     inputs:
-      checkout_ref:
-        description: 'Git tag'
-        required: true
-
       service_name:
         description: 'Service name'
         required: true
