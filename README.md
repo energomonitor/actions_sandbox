@@ -96,3 +96,11 @@ If you need to revert to previous version you just use manual deployment and cho
 We use Slack integration and with this ☝️ CI/CD everything will be nicely seen in Slack.
 
 ![slack integration](.img/slack.png)
+
+## Troubles with the current implementation
+* environments (dev/stage/prod) are shared by all services
+    * one solution could be combine `service_name` and `environment`
+* `service_name` list (choice) are now defined on two places in the [deploy.yaml](.github/workflows/deploy.yaml) and [_service_release.yaml](.github/workflows/_service_release.yaml)
+    * choice don't support dynamic creation
+    * maybe somehow use environments with `service_name` for it?
+* calver is now implemented in the `Makefile`
