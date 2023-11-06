@@ -42,9 +42,9 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          # Check if the checkout_ref has a successful test status
-          if ! gh api repos/${{ github.repository }}/commits/${{ inputs.checkout_ref }}/check-runs | jq '.check_runs[] | select(.conclusion == "success")' > /dev/null; then
-            echo "No successful tests found for ${{ inputs.checkout_ref }}"
+          # Check if the github ref has a successful test status
+          if ! gh api repos/${{ github.repository }}/commits/${{ github.ref }}/check-runs | jq '.check_runs[] | select(.conclusion == "success")' > /dev/null; then
+            echo "No successful tests found for ${{ github.ref }}"
             exit 1
           fi
 
