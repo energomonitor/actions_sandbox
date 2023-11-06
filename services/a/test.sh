@@ -2,4 +2,4 @@
 
 sleep 2
 echo "test success"
-exit 0
+exit 1
