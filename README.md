@@ -97,7 +97,12 @@ We use Slack integration and with this ☝️ CI/CD everything will be nicely se
 
 ![slack integration](.img/slack.png)
 
-## Troubles with the current implementation
+## How to add new service?
+* copy Makefile from some other service
+* add `service_name` to [deploy.yaml](.github/workflows/deploy.yaml) and [_service_release.yaml](.github/workflows/_service_release.yaml)
+* copy service workflow in [.github/workflows](.github/workflows)
+
+# Troubles with the current implementation
 * environments (dev/stage/prod) are shared by all services
     * one solution could be combine `service_name` and `environment`
 * `service_name` list (choice) are now defined on two places in the [deploy.yaml](.github/workflows/deploy.yaml) and [_service_release.yaml](.github/workflows/_service_release.yaml)
