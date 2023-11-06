@@ -1,4 +1,4 @@
-name: Deploy to Environment With Check
+name: Deploy to Environment
 
 run-name: Deploy service ${{ inputs.service_name}} (${{ inputs.checkout_ref }}) to ${{ inputs.environment }} environment
 
