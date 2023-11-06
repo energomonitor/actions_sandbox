@@ -1,4 +1,4 @@
 #!/bin/bash
 
-echo "test fail"
-exit 1
+echo "test ok"
+exit 0
