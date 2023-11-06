@@ -12,7 +12,6 @@ on:
       - main
     paths:
       - .github/workflows/b.yaml
-      - .github/workflows/_*.yaml
       - services/b/*
 
 jobs:
