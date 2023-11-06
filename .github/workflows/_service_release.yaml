@@ -38,6 +38,16 @@ jobs:
           fetch-depth: 0
           fetch-tags: true
 
+      - name: Check for successful tests
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # Check if the checkout_ref has a successful test status
+          if ! gh api repos/${{ github.repository }}/commits/${{ inputs.checkout_ref }}/check-runs | jq '.check_runs[] | select(.conclusion == "success")' > /dev/null; then
+            echo "No successful tests found for ${{ inputs.checkout_ref }}"
+            exit 1
+          fi
+
       - name: Build docker image
         run: make build
 
